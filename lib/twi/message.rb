@@ -1,20 +1,12 @@
 # Enhances the Twilio Ruby gem with an object-oriented approach.
 module Twi
   # The representation of a direct message.
-  class Message
-    # @param params [ActionController::Parameters] the payload of Twilio hitting a callback URL.
-    def initialize(params = {})
-      @params = params
-    end
-
+  class Message < Resource
     # @return [String] unique identifier
     def id = @params['MessageSid']
 
-    # @return [Time] sent timestamp
-    def sent_at = Time.parse @params['SentDate']
-
-    # @return [String] content
-    def body = @params['Body'].squish
+    # @return [String, nil] content
+    def content = @params['Body']&.squish
 
     # @return [String] 10-digit phone number sending the SMS.
     def sender = remove_prefix_from @params['From']
@@ -38,8 +30,36 @@ module Twi
       end
     end
 
+    # @return [Hash] the shape of the payload send by Twilio to the callback URL.
+    def self.params_for(id:, sender:, recipient:, wallflower: nil, content: nil, opt: nil, media: [])
+      {
+        MessageSid: id,
+        From: "+1#{sender}",
+        To: "+1#{recipient}",
+        Body: content,
+      }.merge media_params_for(media).merge opt_params_for(opt).merge wallflower_params_for(wallflower)
+    end
+
   private
 
-    def remove_prefix_from(number) = number&.strip&.delete_prefix '+1'
+    def self.media_params_for(media = [])
+      media.each_with_index.inject({ NumMedia: media.size.to_s }) do |hash, (item, index)|
+        url_key = "MediaUrl#{index}".to_sym
+        content_type_key = "MediaContentType#{index}".to_sym
+        hash.merge url_key => item[:url], content_type_key => item[:content_type]
+      end
+    end
+
+    def self.opt_params_for(opt = nil)
+      case opt
+        when :out then { OptOutType: 'STOP' }
+        when :in then { OptOutType: 'START' }
+        else {}
+      end
+    end
+
+    def self.wallflower_params_for(wallflower = nil)
+      wallflower ? { OtherRecipients0: "+1#{wallflower}" } : {}
+    end
   end
 end

@@ -1,85 +1,63 @@
-# The Twilio API Ruby client enhanced
+# The enhanced Twilio API Ruby client
 
 ## Available methods
-
 
 ### Twi::Message
 
 When receiving an incoming direct message via webhook:
 
 ```ruby
-message = Twi::Message.from params
-message.sid # => 'SM083e290bef7794c407f14e22a891aa6d'
-message.sent_at # => 2026-05-23 12:40:12 UTC
+message = Twi::Message.new params
+message.id # => 'SM083e290bef7794c407f14e22a891aa6d'
 message.content # => 'Hello world'
-message.image_urls # => ['https://example.com/image.png']
 message.sender # => '8009007000'
 message.recipient # => '8008008000'
 message.wallflower # nil
 message.opt_in? # false
 message.opt_out? # false
+message.image_urls # => ['https://example.com/image.png']
 ```
 
+When building a Twilio-like webhook payload:
+
+```ruby
+Twi::Message.params_for id: 'SM12', content: 'Hello', sender: '8009007000', recipient: '8008008000'
+ # => { MessageSid: 'SM12', Body: 'Hello',From: '+18009007000', To: '+18008008000' } 
+```
 
 ### Twi::Delivery
 
 When receiving a delivery notification via webhook:
 
 ```ruby
-delivery = Twi::Delivery.from params
-delivery.sid # => 'SM083e290bef7794c407f14e22a891aa6d'
+delivery = Twi::Delivery.new params
+delivery.id # => 'SM083e290bef7794c407f14e22a891aa6d'
 delivery.status # => 'draft'
 delivery.code # => '30006'
 ```
 
-
-twi = Twi.sign message:, secret:
-
-twi.timestamp # => 1779489515999
-twi.signature # => 46f5297a94d0050ba6039bfcb12d6e4c1f955e39b34f98cf2bd5f9720b34ac49
-```
-
-Verify a signed message:
+When building a Twilio-like webhook payload:
 
 ```ruby
-twi = Twi.new message:, secret:
-twi.signed? signature:, timestamp: # true
+Twi::Delivery.params_for id: 'SM12', status: 'sent'
+ # => { SmsSid: 'SM12', MessgeStatus: 'sent', ErrorCode: nil } 
 ```
 
+### Twi::Event
 
-### Things to do
+When receiving events about a conversation:
 
-#### 1. Rails engine for callback routes
+```ruby
+event = Twi::Event.new params
+event.id # => 'SM083e290bef7794c407f14e22a891aa6d'
+event.conversation_id # => 'CH123'
+event.target # => :participant
+event.participant # => #<Participant id: 'SH12', phone: '9008009000', identity: nil>
+```
 
-
-What **types** of webhooks?
-
-##### 1a. for direct message deliveries (POST /deliveries)
-
-- [x] tell me the message sid, the new status (from an enum), the error code
-
-##### 1b. for incoming direct messages (POST /messages)
-
-- [ ] tell me the sender number without +1
-- [ ] tell me if it's an OptIn or an OptOut
-- [ ] tell me if there's other recipient (called `other` or `witness` or `wallflower`)
-- [ ] TODO: replace *two* answers endpoints with one that accepts the recipient number to distinguish
-
-##### 1c. for conversations (POST /conversations)
-
-- [ ] after a conversation is created or updated, tell me the new status (should be `ready`)
-- [ ] after a participant is added, give me the participant (sid, identity, and phone without +1)
-- [ ] after a message is posted, tell me the participant and sid, body, media URLs of the message
-- [ ] after a delivery, tell me the message sid, the new sttatus, and the error code
-
-so there would be a Twi::Delivery object probably
-
-
-what would a Twi gem do in principle?
+## To Do
 
 1. have a Rails engine with the webhook URLs already set?
-2. honor Opt in/out somehow
-3. if an SMS has OtherRecipient0 then...
 4. have an interface to send and receive SMS with photos
 5. another webhook for conversations
 6. another one to be notified of deliveries
@@ -93,6 +71,4 @@ what would a Twi gem do in principle?
 14. return SIDs so we can store them
 15. Set up defaults likw Twi::Lio.sid
 16. Twi.mock = true
-
-what about an active record numbers table and a conversations table
 

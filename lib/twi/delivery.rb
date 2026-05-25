@@ -1,12 +1,7 @@
 # Enhances the Twilio Ruby gem with an object-oriented approach.
 module Twi
   # The representation of a direct message delivery notification.
-  class Delivery
-    # @param params [ActionController::Parameters] the payload of Twilio hitting a callback URL.
-    def initialize(params = {})
-      @params = params
-    end
-
+  class Delivery < Resource
     # @return [String] unique identifier
     def id = @params['SmsSid']
 
