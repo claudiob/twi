@@ -2,15 +2,8 @@
 module Twi
   # The representation of an event tied to a (clasic) conversation.
   class Event < Resource
-    # @return [Symbol] what the event is about
-    def target
-      case @params['EventType']
-        when 'onConversationAdded', 'onConversationStateUpdated' then :conversation
-        when 'onParticipantAdded' then :participant
-        when 'onMessageAdded' then :message
-        when 'onDeliveryUpdated' then :delivery
-      end
-    end
+    # @return [Symbol] event target type, can be :conversation, :participant, :message, :delivery.
+    def target = @params['EventType'].underscore.split('_').second.to_sym
 
     # @return [String] conversation state, one of active, inactive, closed, initializing.
     def status = @params['Status'] || @params['StateTo'] || @params['State']
@@ -35,5 +28,25 @@ module Twi
 
     # @return [String, nil] error code
     def code = @params['ErrorCode']
+
+    # @return [Hash] the shape of the payload send by Twilio to the callback URL.
+    def self.params_for(id:, type:, status: nil, participant: nil)
+      {
+        ConversationSid: id, EventType: "on_#{type}_changed".camelize(:lower),
+        State: status&.to_s,
+      }.merge(participant_params_for participant).compact
+    end
+
+    def self.participant_params_for(participant = nil)
+      if participant
+        if participant[:identity]
+          { ParticipantSid: participant[:id], Identity: participant[:identity] }
+        else
+          { ParticipantSid: participant[:id], 'MessagingBinding.Address' => "+1#{participant[:phone]}" }
+        end
+      else
+        {}
+      end
+    end
   end
 end
