@@ -11,7 +11,7 @@ module Twi
     def create
       phone = client.incoming_phone_numbers.create area_code: @params[:area_code],
         emergency_address_sid: Twi.lio.emergency_address_sid, friendly_name: @params[:friendly_name]
-      twilio_messaging_service.phone_numbers.create phone_number_sid: phone.sid
+      messaging_service.phone_numbers.create phone_number_sid: phone.sid
 
       @id = phone.sid
       @number = remove_prefix_from phone.phone_number
@@ -22,15 +22,5 @@ module Twi
 
     # @return [String] 10-digit number.
     attr_reader :number
-
-  private
-
-    def client
-      Twilio::REST::Client.new Twi.lio.account_sid, Twi.lio.auth_token
-    end
-
-    def twilio_messaging_service
-      client.messaging.v1.services Twi.lio.messaging_sid.to_s
-    end
   end
 end
