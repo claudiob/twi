@@ -14,6 +14,8 @@ module Twi
       end
     end
 
+    def upload(file) = 'fake-sid'
+
     def rename(friendly_name); end
 
     def close; end

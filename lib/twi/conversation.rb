@@ -34,6 +34,20 @@ module Twi
       conversation.messages.create **message_params_for(content, image_ids)
     end
 
+    # TODO: Move into Medium -- this method doesn't use anything from this class
+    def upload(file)
+      uri = URI "https://mcs.us1.twilio.com/v1/Services/#{Twi.lio.conversation_sid}/Media"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+
+      headers = { 'Content-Type' => file.content_type, 'Content-Size' => file.byte_size.to_s }
+      request = Net::HTTP::Post.new uri.request_uri, headers
+      request.basic_auth Twi.lio.api_key, Twi.lio.secret
+      request.body = file.download
+      response = http.request request
+      JSON(response.body)['sid']
+    end
+
   private
 
     def conversation
