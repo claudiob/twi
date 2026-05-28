@@ -60,23 +60,37 @@ event.participant # => #<Participant id: 'SH12', phone: '9008009000', identity: 
 To create an incoming phone number:
 
 ```ruby
-phone = Twi::Phone.new area_code:, friendly_name:
-phone.create
+phone = Twi.create_phone area_code:, friendly_name:
 phone.id # => 'SM083e290bef7794c407f14e65a891aa6d'
 phone.number # => '5556667777'
 ```
 
+## Available mocks
+
+Use these methods to mock request to Twilio when testing an app:
+
+### Credentials
+
+Mock an error when creating an incoming phone number:
+
+```ruby
+Jbr.mock.phone_error = { code: '21452' }
+```
+
+Mock successfully creating an incoming phone number:
+
+```ruby
+Jbr.mock.phone = { id: 'SM083e290bef7794c407f14e65a891aa6d', number: '8009005000' }
+```
+
+
 ## To Do
 
 4. have an interface to send and receive SMS with photos
-7. Assistant > create a phone number
 8. have an error code URL for each error code and a sid_url
 9. Declare some phones like Twilio.homeowner_phone or Twilio.numbers[:ddd] and a default Twilio.number and similar Twilio.messaging_service
 10. a way to reopen closed conversations
 11. a way to create conversations
 12. and upload pictures in a conversation
 13. x_twilio_webhook_enabled: true
-14. return SIDs so we can store them
-15. Set up defaults likw Twi::Lio.sid
-16. Twi.mock = true
 

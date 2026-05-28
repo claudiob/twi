@@ -1,5 +1,6 @@
 ## [0.3.0] - 2026-05-27
 
+- [New] Add Twi.create_phone, Twi.mock.phone, Twi.mock.phone_error
 - [New] Add Twi::Phone
 
 ## [0.2.0] - 2026-05-25
