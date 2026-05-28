@@ -2,11 +2,6 @@
 module Twi
   # The representation of a phone number associated to the default messaging service.
   class Phone < Resource
-    # Create a Phone instance within the given area code and friendly name.
-    def self.create(area_code:, friendly_name:)
-      new(area_code: area_code, friendly_name: friendly_name).create
-    end
-
     # Create an incoming phone number within the area code and friendly name.
     def create
       phone = client.incoming_phone_numbers.create area_code: @params[:area_code],

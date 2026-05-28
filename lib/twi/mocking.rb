@@ -8,6 +8,10 @@ module Twi
       phone(...).tap &:create
     end
 
+    def create_message(...)
+      message(...).tap &:create
+    end
+
     def conversation(...)
       (@mock ? Mock::Conversation : Conversation).new(...)
     end
@@ -18,6 +22,10 @@ module Twi
 
     def phone(...)
       (@mock ? Mock::Phone : Phone).new(...)
+    end
+
+    def message(...)
+      (@mock ? Mock::Message : Message).new(...)
     end
   end
 

@@ -11,16 +11,12 @@ module Twi
 
     def remove_prefix_from(number) = number&.strip&.delete_prefix '+1'
 
-    def client
-      Twilio::REST::Client.new Twi.lio.account_sid, Twi.lio.auth_token
-    end
+    def client = Twilio::REST::Client.new Twi.lio.account_sid, Twi.lio.auth_token
 
-    def messaging_service
-      client.messaging.v1.services Twi.lio.messaging_sid.to_s
-    end
+    def api_client = Twilio::REST::Client.new Twi.lio.api_key, Twi.lio.secret
 
-    def conversation_service
-      client.conversations.v1.services Twi.lio.conversation_sid.to_s
-    end
+    def messaging_service = client.messaging.v1.services Twi.lio.messaging_sid.to_s
+
+    def conversation_service = client.conversations.v1.services Twi.lio.conversation_sid.to_s
   end
 end

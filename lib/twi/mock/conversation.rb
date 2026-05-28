@@ -23,7 +23,7 @@ module Twi
     def delete; end
 
     def create_message(content:, image_ids: [])
-      Mock::Message.new Twi.mock.message if Twi.mock.message
+      Mock::Message.new Twi.mock.message
     end
   end
 end

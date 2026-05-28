@@ -30,6 +30,18 @@ module Twi
       end
     end
 
+    attr_reader :status
+
+    # Sends a message.
+    def create
+      message = api_client.messages.create messaging_service_sid: Twi.lio.messaging_sid.to_s,
+        from: "+1#{@params[:sender]}", to: "+1#{@params[:recipient]}", body: @params[:content]
+
+      @id = message.sid
+      @status = message.status
+      # todo rescue and then set @code
+    end
+
     # @return [Hash] the shape of the payload send by Twilio to the callback URL.
     def self.params_for(id:, sender:, recipient:, wallflower: nil, content: nil, opt: nil, media: [])
       {
