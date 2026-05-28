@@ -12,6 +12,10 @@ module Twi
       (@mock ? Mock::Conversation : Conversation).new(...)
     end
 
+    def event(...)
+      (@mock ? Mock::Event : Event).new(...)
+    end
+
     def phone(...)
       (@mock ? Mock::Phone : Phone).new(...)
     end

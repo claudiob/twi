@@ -1,6 +1,6 @@
 # Enhances the Twilio Ruby gem with an object-oriented approach.
 module Twi
-  # The representation of an event tied to a (clasic) conversation.
+  # An event tied to a (classic) conversation.
   class Event < Resource
     # @return [Symbol] event target type, can be :conversation, :participant, :message, :delivery.
     def target = @params['EventType'].underscore.split('_').second.to_sym
@@ -19,7 +19,7 @@ module Twi
 
     # @return [Array<String>] URLs of image attachments
     def image_urls
-      media = JSON(@params.fetch('Media', '[]')).map { |params| Medium.new params }
+      media = JSON(@params.fetch('Media', '[]')).map { |params| medium_for params }
       media.filter(&:image?).map { |image| image.url }
     end
 
@@ -48,5 +48,9 @@ module Twi
         {}
       end
     end
+
+  private
+
+    def medium_for(params) = Medium.new params
   end
 end
