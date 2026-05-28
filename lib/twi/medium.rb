@@ -18,7 +18,7 @@ module Twi
       http.use_ssl = true
 
       request = Net::HTTP::Get.new(uri.request_uri)
-      request.basic_auth Twi.lio.sid, Twi.lio.secret
+      request.basic_auth Twi.lio.api_key, Twi.lio.secret
       response = http.request(request)
 
       JSON(response.body).dig 'links', 'content_direct_temporary'
@@ -27,7 +27,7 @@ module Twi
   private
 
     def service_url
-      "https://mcs.us1.twilio.com/v1/Services/#{Twi.lio.conversation_service_sid}/Media/#{id}"
+      "https://mcs.us1.twilio.com/v1/Services/#{Twi.lio.conversation_sid}/Media/#{id}"
     end
   end
 end

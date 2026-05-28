@@ -30,18 +30,34 @@ module Twi
   class Lio
     # Initialize the global configuration settings defaulting to matching environment variables.
     def initialize
-      @sid = ENV['TWILIO_SID']
+      @api_key = ENV['TWILIO_SID']
       @secret = ENV['TWILIO_SECRET']
-      @conversation_service_sid = ENV['TWILIO_CONVERSATION_SERVICE_SID']
+      @account_sid = ENV['TWILIO_ACCOUNT_SID']
+      @auth_token = ENV['TWILIO_AUTH_TOKEN']
+      @conversation_sid = ENV['TWILIO_CONVERSATION_SERVICE_SID']
+      @messaging_sid = ENV['TWILIO_MESSAGING_SID']
+      @emergency_address_sid = ENV['TWILIO_EMERGENCY_SID']
     end
 
-    # @return [String] the SID to interact with the Twilio API.
-    attr_reader :sid
+    # @return [String] API key - used for basic operations like sending messages.
+    attr_reader :api_key
 
-    # @return [String] the secret to interact with the Twilio API.
+    # @return [String] secret - to authenticate API requests made with +api_key+.
     attr_reader :secret
 
-    # @return [String] the SID of the default Conversation service to use.
-    attr_reader :conversation_service_sid
+    # @return [String] Account SID - used for advanced operations like creating numbers.
+    attr_reader :account_sid
+
+    # @return [String] OAuth token - to authenticate API requests made with +account_sid+.
+    attr_reader :auth_token
+
+    # @return [String] the SID of the default Conversation service.
+    attr_reader :conversation_sid
+
+    # @return [String] the SID of the default Messaging service.
+    attr_reader :messaging_sid
+
+    # @return [String] the SID of the emergency address.
+    attr_reader :emergency_address_sid
   end
 end

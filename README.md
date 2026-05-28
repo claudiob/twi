@@ -55,12 +55,20 @@ event.target # => :participant
 event.participant # => #<Participant id: 'SH12', phone: '9008009000', identity: nil>
 ```
 
+### Twi::Phone
+
+To create an incoming phone number:
+
+```ruby
+phone = Twi::Phone.new area_code:, friendly_name:
+phone.create
+phone.id # => 'SM083e290bef7794c407f14e65a891aa6d'
+phone.number # => '5556667777'
+```
+
 ## To Do
 
-1. have a Rails engine with the webhook URLs already set?
 4. have an interface to send and receive SMS with photos
-5. another webhook for conversations
-6. another one to be notified of deliveries
 7. Assistant > create a phone number
 8. have an error code URL for each error code and a sid_url
 9. Declare some phones like Twilio.homeowner_phone or Twilio.numbers[:ddd] and a default Twilio.number and similar Twilio.messaging_service
