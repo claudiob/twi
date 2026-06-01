@@ -1,3 +1,7 @@
+## [0.3.3] - 2026-06-01
+
+- [Fix] Use newer console URL for Twi::Conversation.url
+
 ## [0.3.2] - 2026-06-01
 
 - [New] Add Twi::Message.url_for, Twi::Delivery.url_for, Twi::Delivery.unsubscribed?

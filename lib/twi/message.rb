@@ -46,7 +46,7 @@ module Twi
       @id = message.sid
       @status = message.status
     rescue Twilio::REST::RestError => error
-      raise Error, error
+      raise Error, code: error.code, message: error.error_message
     end
 
     # @return [Hash] the shape of the payload send by Twilio to the callback URL.

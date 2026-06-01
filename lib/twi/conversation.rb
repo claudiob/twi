@@ -31,8 +31,8 @@ module Twi
     end
 
     def url
-      url = "/console/conversations/services/#{Twi.lio.conversation_sid}/conversations/#{id}/messages"
-      query = "currentFrameUrl=#{CGI.escape url}"
+      url = "/console/conversations/services/#{Twi.lio.conversation_sid}/conversations/#{id}"
+      query = "frameUrl=#{CGI.escape url}"
       "https://console.twilio.com/us1/develop/conversations/manage/services?#{query}"
     end
 
