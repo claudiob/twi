@@ -30,6 +30,12 @@ module Twi
       end
     end
 
+    # @return [String] log URL for given message.
+    def self.url_for(id)
+      account_sid = Twi.lio.account_sid
+      "https://console.twilio.com/us1/monitor/logs/sms/#{account_sid}/#{id}"
+    end
+
     attr_reader :status
 
     # Sends a message.

@@ -30,6 +30,12 @@ module Twi
       conversation.delete
     end
 
+    def url
+      url = "/console/conversations/services/#{Twi.lio.conversation_sid}/conversations/#{id}/messages"
+      query = "currentFrameUrl=#{CGI.escape url}"
+      "https://console.twilio.com/us1/develop/conversations/manage/services?#{query}"
+    end
+
     def create_message(content:, image_ids: [])
       conversation.messages.create **message_params_for(content, image_ids)
     end
