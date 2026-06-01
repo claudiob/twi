@@ -12,8 +12,8 @@ module Twi
       @status = conversation.state
     rescue Twilio::REST::RestError => error
       case error.code
-        when 50438 then raise ExistingConversationError.new(error.error_message)
-        when 50214 then raise TooManyConversationsError.new(error.error_message)
+        when 50438 then raise ExistingConversationError.new(code: error.code, message: error.error_message)
+        when 50214 then raise TooManyConversationsError.new(code: error.code, message: error.error_message)
         else raise
       end
     end
