@@ -1,3 +1,7 @@
+## [0.3.6] - 2026-06-01
+
+- [Fix] Expose Twi::Conversation#id and #status
+
 ## [0.3.5] - 2026-06-01
 
 - [Fix] Ignore 404 on conversation.delete

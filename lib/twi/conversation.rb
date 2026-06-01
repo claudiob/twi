@@ -8,8 +8,7 @@ module Twi
       params = create_params_for participants
       conversation = conversation_service.conversation_with_participants.create **params
 
-      @id = conversation.sid
-      @status = conversation.state
+      @params = { id: conversation.sid, status: conversation.state }
     rescue Twilio::REST::RestError => error
       case error.code
         when 50438 then raise ExistingConversationError.new(code: error.code, message: error.error_message)
@@ -56,10 +55,14 @@ module Twi
       JSON(response.body)['sid']
     end
 
+    def id = @params[:id]
+
+    def status = @params[:status]
+
   private
 
     def conversation
-      conversation_service.conversations @params[:id]
+      conversation_service.conversations id
     end
 
     def create_params_for(participants)

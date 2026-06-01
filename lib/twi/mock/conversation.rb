@@ -8,8 +8,7 @@ module Twi
           when 50214 then raise TooManyConversationsError.new(error)
         end
       elsif Twi.mock.conversation
-        @id = Twi.mock.conversation[:id]
-        @status = Twi.mock.conversation[:status]
+        @params = { id: Twi.mock.conversation[:id], status: Twi.mock.conversation[:status] }
       end
     end
 
