@@ -28,6 +28,8 @@ module Twi
 
     def delete
       conversation.delete
+    rescue Twilio::REST::RestError => error
+      raise unless error.code == 20404
     end
 
     def url

@@ -1,3 +1,7 @@
+## [0.3.5] - 2026-06-01
+
+- [Fix] Ignore 404 on conversation.delete
+
 ## [0.3.4] - 2026-06-01
 
 - [Fix] Fix params of Twi::Error
