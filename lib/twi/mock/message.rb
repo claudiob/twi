@@ -4,9 +4,16 @@ module Twi
     def id = @params[:id]
 
     def create
-      @id = "SM#{rand}"
-      @status = 'delivered'
-      # todo rescue and then set @code
+      if error = Twi.mock.message_error
+        Twi.mock.message_error = nil
+        raise Error, error
+      elsif Twi.mock.message
+        @id = Twi.mock.message[:id]
+        @status = Twi.mock.message[:status]
+      else
+        @id = "SM#{rand}"
+        @status = 'delivered'
+      end
     end
   end
 end

@@ -1,12 +1,11 @@
 module Twi
   class Mock::Conversation < Conversation
     def create_with(participants:)
-      if Twi.mock.conversation_error
-        if Twi.mock.conversation_error[:code] == 50438
-          raise ExistingConversationError.new(Twi.mock.conversation_error[:message])
-        elsif Twi.mock.conversation_error[:code] == 50214
-          Twi.mock.conversation_error = nil
-          raise TooManyConversationsError
+      if error = Twi.mock.conversation_error
+        Twi.mock.conversation_error = nil
+        case error[:code]
+          when 50438 then raise ExistingConversationError.new(error)
+          when 50214 then raise TooManyConversationsError.new(error)
         end
       elsif Twi.mock.conversation
         @id = Twi.mock.conversation[:id]

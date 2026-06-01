@@ -1,3 +1,7 @@
+## [0.3.1] - 2026-06-01
+
+- [New] Raise Twi::Error, not Twilio::REST::RestError
+
 ## [0.3.0] - 2026-05-27
 
 - [New] Add Twi::Message#create
