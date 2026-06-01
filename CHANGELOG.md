@@ -1,3 +1,7 @@
+## [0.3.7] - 2026-06-01
+
+- [Fix] Expose Twi::Mock::Message#sid
+
 ## [0.3.6] - 2026-06-01
 
 - [Fix] Expose Twi::Conversation#id and #status

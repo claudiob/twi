@@ -3,6 +3,9 @@ module Twi
     # @return [String] unique identifier
     def id = @params[:id]
 
+    # @return [String] unique identifier
+    def sid = @params[:id]
+
     def create
       if error = Twi.mock.message_error
         Twi.mock.message_error = nil
