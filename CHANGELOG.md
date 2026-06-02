@@ -1,3 +1,7 @@
+## [0.3.8] - 2026-06-02
+
+- [Fix] Make Twi::Message.id not null
+
 ## [0.3.7] - 2026-06-01
 
 - [Fix] Expose Twi::Mock::Message#sid

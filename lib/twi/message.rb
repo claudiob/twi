@@ -43,6 +43,7 @@ module Twi
       message = api_client.messages.create messaging_service_sid: Twi.lio.messaging_sid.to_s,
         from: "+1#{@params[:sender]}", to: "+1#{@params[:recipient]}", body: @params[:content]
 
+      @params = { 'MessageSid' => message.sid }
       @id = message.sid
       @status = message.status
     rescue Twilio::REST::RestError => error
