@@ -11,10 +11,10 @@ module Twi
         Twi.mock.message_error = nil
         raise Error, error
       elsif Twi.mock.message
-        @id = Twi.mock.message[:id]
+        @params[:id] = Twi.mock.message[:id]
         @status = Twi.mock.message[:status]
       else
-        @id = "SM#{rand}"
+        @params[:id] = "SM#{rand}"
         @status = 'delivered'
       end
     end
