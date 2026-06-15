@@ -1,6 +1,6 @@
 module Twi
   class Mock::Conversation < Conversation
-    def create_with(participants:)
+    def create_with(host:, participant_phones:)
       if error = Twi.mock.conversation_error
         Twi.mock.conversation_error = nil
         case error[:code]

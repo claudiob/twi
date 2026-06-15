@@ -1,3 +1,7 @@
+## [0.4.0] - 2026-06-15
+
+- [Fix] Include proxy_address in conversation participant
+
 ## [0.3.9] - 2026-06-08
 
 - [Fix] Make Twi::Mock::Message.id not null

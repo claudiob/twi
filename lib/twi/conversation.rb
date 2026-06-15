@@ -4,8 +4,8 @@ module Twi
   class Conversation < Resource
     attr_reader :id, :status
 
-    def create_with(participants:)
-      params = create_params_for participants
+    def create_with(host:, participant_phones:)
+      params = create_params_for host, participant_phones
       conversation = conversation_service.conversation_with_participants.create **params
 
       @params = { id: conversation.sid, status: conversation.state }
@@ -65,22 +65,19 @@ module Twi
       conversation_service.conversations id
     end
 
-    def create_params_for(participants)
+    def create_params_for(host, participant_phones)
       {
         messaging_service_sid: Twi.lio.messaging_sid, x_twilio_webhook_enabled: 'true',
-        friendly_name: @params[:friendly_name], participant: participant_params_for(participants),
+        friendly_name: @params[:friendly_name], participant: participant_params_for(host, participant_phones),
       }
     end
 
-    def participant_params_for(participants)
-      participants.map do |participant|
-        phone = "+1#{participant[:phone]}"
-        if participant[:identity]
-          { messaging_binding: { projected_address: phone }, identity: participant[:identity] }
-        else
-          { messaging_binding: { address: phone } }
-        end
-      end.map(&:to_json)
+    def participant_params_for(host, participant_phones)
+      params = [{ messaging_binding: { projected_address: "+1#{host[:phone]}" }, identity: host[:identity] }]
+      participant_phones.map do |participant_phone|
+        params << { messaging_binding: { address: "+1#{participant_phone}", proxy_address: "+1#{host[:phone]}" } }
+      end
+      params.map(&:to_json)
     end
 
     def message_params_for(content, image_ids)
