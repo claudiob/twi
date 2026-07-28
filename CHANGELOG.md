@@ -1,3 +1,7 @@
+## [0.6.0] - 2026-07-27
+
+- [Fix] Remove proxy_address from conversation participant
+
 ## [0.5.0] - 2026-07-27
 
 - [New] Add Twi::Delivery#sender
