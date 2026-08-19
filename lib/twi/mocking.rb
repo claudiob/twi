@@ -4,6 +4,13 @@ module Twi
       @mock ||= Twi::Mock.new
     end
 
+    # Forgets every answer arranged so far and starts mocking again from nothing.
+    # A test suite calls this before each test: the mock lives on the module, so
+    # without it one test answers for the next.
+    def reset_mock
+      @mock = Twi::Mock.new
+    end
+
     def create_phone(...)
       phone(...).tap &:create
     end

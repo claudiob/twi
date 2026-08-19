@@ -9,6 +9,8 @@ module Twi
         end
       elsif Twi.mock.conversation
         @params = { id: Twi.mock.conversation[:id], status: Twi.mock.conversation[:status] }
+      else
+        @params = { id: "CH#{rand}", status: 'initializing' }
       end
     end
 

@@ -1,3 +1,8 @@
+## [0.7.0] - 2026-08-19
+
+- [New] Add Twi.reset_mock, to stop a mocked answer outliving the test that arranged it
+- [Fix] Answer an unarranged Twi::Mock::Conversation#create_with, as Message#create does
+
 ## [0.6.0] - 2026-07-27
 
 - [Fix] Remove proxy_address from conversation participant
