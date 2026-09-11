@@ -1,3 +1,8 @@
+## [0.8.0] - 2026-09-11
+
+- [New] Send media with a message: `Twi.create_message media_url:` carries it as an MMS
+- [New] Record what was sent on Twi.mock.messages, so a suite can assert it
+
 ## [0.7.0] - 2026-08-19
 
 - [New] Add Twi.reset_mock, to stop a mocked answer outliving the test that arranged it

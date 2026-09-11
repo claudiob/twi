@@ -7,6 +7,8 @@ module Twi
     def sid = @params[:id]
 
     def create
+      Twi.mock.messages << @params.slice(:sender, :recipient, :content, :media_url)
+
       if error = Twi.mock.message_error
         Twi.mock.message_error = nil
         raise Error, error

@@ -40,8 +40,7 @@ module Twi
 
     # Sends a message.
     def create
-      message = api_client.messages.create messaging_service_sid: Twi.lio.messaging_sid.to_s,
-        from: "+1#{@params[:sender]}", to: "+1#{@params[:recipient]}", body: @params[:content]
+      message = api_client.messages.create **create_params
 
       @params = { 'MessageSid' => message.sid }
       @id = message.sid
@@ -61,6 +60,17 @@ module Twi
     end
 
   private
+
+    # Twilio fetches whatever `media_url` names and carries it as an MMS, so a vCard among
+    # them arrives as a contact card the reader can save rather than a link they must open.
+    # @return [Hash] the arguments Twilio takes for one outbound message.
+    def create_params
+      media = Array @params[:media_url]
+
+      { messaging_service_sid: Twi.lio.messaging_sid.to_s, from: "+1#{@params[:sender]}",
+        to: "+1#{@params[:recipient]}", body: @params[:content] }
+        .merge(media.any? ? { media_url: media } : {})
+    end
 
     def self.media_params_for(media = [])
       media.each_with_index.inject({ NumMedia: media.size.to_s }) do |hash, (item, index)|
