@@ -6,14 +6,15 @@ Gem::Specification.new do |spec|
   spec.authors = ['Claudio Baccigalupo']
   spec.email = ['claudiob@users.noreply.github.com']
 
-  spec.summary = 'API Signature with timestamped MAC (Message Authentication Code).'
-  spec.description = 'Enhances OpenSSL::HMAC with timestamp.'
+  spec.summary = 'An object-oriented Ruby client for the Twilio API.'
+  spec.description = 'Sends messages, places calls and reads the webhooks Twilio answers them with.'
   spec.homepage = 'https://github.com/claudiob/twi'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.2.0'
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/claudiob/twi'
   spec.metadata['changelog_uri'] = 'https://github.com/claudiob/twi'
+  spec.metadata['documentation_uri'] = 'https://rubydoc.info/gems/twi'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
