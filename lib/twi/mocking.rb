@@ -19,6 +19,10 @@ module Twi
       message(...).tap &:create
     end
 
+    def create_call(...)
+      (@mock ? Mock::Call : Call).new(...).tap &:create
+    end
+
     def conversation(...)
       (@mock ? Mock::Conversation : Conversation).new(...)
     end

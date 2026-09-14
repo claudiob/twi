@@ -1,3 +1,10 @@
+## [Unreleased]
+
+- [New] Place a call with Twi.create_call, telling Twilio where to read its TwiML
+- [New] Add Twi::Call, to read the webhook Twilio reports a call on
+- [New] Add Twi::Call.params_for, to build a call webhook payload in a test
+- [New] Add Twi.mock.call, Twi.mock.call_error and Twi.mock.calls
+
 ## [0.8.0] - 2026-09-11
 
 - [New] Send media with a message: `Twi.create_message media_url:` carries it as an MMS
