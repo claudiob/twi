@@ -1,5 +1,18 @@
 # The enhanced Twilio API Ruby client
 
+## How to install
+
+To install on your system, run:
+
+    gem install twi
+
+To use inside a bundled Ruby project, add this line to the Gemfile:
+
+    gem 'twi', '~> 0.9.0'
+
+This gem follows [Semantic Versioning](https://semver.org). Below 1.0 a minor release may
+break an API, so the pin stops short of 0.10: `bundle update` never crosses one.
+
 ## Available methods
 
 ### Twi::Message
@@ -43,6 +56,36 @@ Twi::Delivery.params_for id: 'SM12', status: 'sent'
  # => { SmsSid: 'SM12', MessgeStatus: 'sent', ErrorCode: nil } 
 ```
 
+### Twi::Call
+
+To place an outbound call, telling Twilio where to read its instructions and where to
+report on how it went:
+
+```ruby
+call = Twi.create_call sender: '8008008000', recipient: '8009007000',
+  url: 'https://example.com/twiml', status_callback: 'https://example.com/calls'
+call.id # => 'CA083e290bef7794c407f14e22a891aa6d'
+call.status # => 'queued'
+```
+
+When receiving an update about a call via webhook:
+
+```ruby
+call = Twi::Call.new params
+call.id # => 'CA083e290bef7794c407f14e22a891aa6d'
+call.status # => 'completed'
+call.digits # => '2'
+call.sender # => '8008008000'
+call.recipient # => '8009007000'
+```
+
+When building a Twilio-like webhook payload:
+
+```ruby
+Twi::Call.params_for id: 'CA12', status: 'completed', digits: '2'
+ # => { CallSid: 'CA12', CallStatus: 'completed', Digits: '2' }
+```
+
 ### Twi::Event
 
 When receiving events about a conversation:
@@ -74,13 +117,34 @@ Use these methods to mock request to Twilio when testing an app:
 Mock an error when creating an incoming phone number:
 
 ```ruby
-Jbr.mock.phone_error = { code: '21452' }
+Twi.mock.phone_error = { code: '21452' }
 ```
 
 Mock successfully creating an incoming phone number:
 
 ```ruby
-Jbr.mock.phone = { id: 'SM083e290bef7794c407f14e65a891aa6d', number: '8009005000' }
+Twi.mock.phone = { id: 'SM083e290bef7794c407f14e65a891aa6d', number: '8009005000' }
+```
+
+### Calls
+
+Mock an error when placing a call:
+
+```ruby
+Twi.mock.call_error = { code: '21215' }
+```
+
+Mock successfully placing a call:
+
+```ruby
+Twi.mock.call = { id: 'CA083e290bef7794c407f14e22a891aa6d', status: 'queued' }
+```
+
+Read back every call placed since the mock was reset, to assert what a suite sent:
+
+```ruby
+Twi.mock.calls # => [{ sender: '8008008000', recipient: '8009007000', url: 'https://example.com/twiml',
+               #      status_callback: 'https://example.com/calls' }]
 ```
 
 
