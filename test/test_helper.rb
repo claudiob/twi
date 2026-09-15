@@ -1,5 +1,5 @@
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start { minimum_coverage 100 }
 
 require 'minitest/autorun'
 require 'webmock/minitest'
