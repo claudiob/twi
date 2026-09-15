@@ -68,8 +68,6 @@ private
       'Method' => 'GET', 'StatusCallback' => 'https://example.com/status', }
   end
 
-  def asked_of(request) = URI.decode_www_form(request.body).to_h
-
   def stub_call(sid:, status:)
     stub_request(:post, CALLS_URL).
       to_return body: { sid: sid, status: status }.to_json,
