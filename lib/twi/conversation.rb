@@ -2,8 +2,6 @@
 module Twi
   # The representation of a (classic) group conversation.
   class Conversation < Resource
-    attr_reader :id, :status
-
     def create_with(participants:)
       params = create_params_for participants
       conversation = conversation_service.conversation_with_participants.create **params

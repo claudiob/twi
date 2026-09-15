@@ -16,6 +16,8 @@ class EventTest < Minitest::Test
     assert_match(/\ASM/, event.id)
     assert_equal [ 'https://example.com/photo.jpg' ], event.image_urls
     assert_equal 'MB1', event.participant.id
+    # What the event is about, read off its name with a method Rails brings and a gem must ask for.
+    assert_equal :message, event.target
   end
 
   def test_a_message_event_with_nothing_attached_carries_no_media_at_all

@@ -1,5 +1,6 @@
 require 'action_controller'
 require 'action_controller/metal/strong_parameters'
+require 'active_support/core_ext/array/access'
 require 'active_support/core_ext/enumerable'
 require 'active_support/core_ext/object/blank'
 require 'json'
