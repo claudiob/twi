@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.9.0] - 2026-09-14
+
 - [New] Place a call with Twi.create_call, telling Twilio where to read its TwiML
 - [New] Add Twi::Call, to read the webhook Twilio reports a call on
 - [New] Add Twi::Call.params_for, to build a call webhook payload in a test
