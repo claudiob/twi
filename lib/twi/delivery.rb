@@ -12,8 +12,9 @@ module Twi
     # @return [String, nil] error code
     def code = @params['ErrorCode']
 
-    # @return [String] phone number that delivered the message.
-    def sender = @params['From']
+    # @return [String] phone number that delivered the message, as every other resource here
+    #   reads one: ten digits, whatever prefix Twilio wrote it with.
+    def sender = remove_prefix_from @params['From']
 
     # @return [String] documentation URL for given error code.
     def self.url_for(code)

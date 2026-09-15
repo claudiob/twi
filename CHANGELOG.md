@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- [Fix] Read an event's target outside Rails, where Array#second is not loaded by an app
+- [Fix] Read a delivery's sender as ten digits, the way every other resource reads a number
+- [Fix] Raise a mocked phone's arranged error, and forget it, as the message and call mocks do
+
 ## [0.9.0] - 2026-09-14
 
 - [New] Place a call with Twi.create_call, telling Twilio where to read its TwiML

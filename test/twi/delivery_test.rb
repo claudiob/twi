@@ -9,7 +9,7 @@ class DeliveryTest < Minitest::Test
     assert_equal 'SM1', delivery.id
     assert_equal 'undelivered', delivery.status
     assert_equal '21610', delivery.code
-    assert_equal '+18009007000', delivery.sender
+    assert_equal '8009007000', delivery.sender
   end
 
   def test_the_code_a_delivery_failed_with_says_whether_the_reader_unsubscribed
